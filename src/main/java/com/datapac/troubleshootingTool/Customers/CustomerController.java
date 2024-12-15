@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.datapac.troubleshootingTool.Printers.Printer;
+
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
@@ -21,7 +23,7 @@ public class CustomerController {
     }
 
     // create
-    @PutMapping("/new")
+    @PostMapping("/new")
     public Customer createCustomer(@RequestBody Customer customer) {
         return customerService.createCustomer(customer);
     }
@@ -39,7 +41,7 @@ public class CustomerController {
     }
 
     // update
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public Customer updateCustomer(@RequestBody Customer customer, @PathVariable Long id) {
         return customerService.updateCustomer(customer, id);
     }
@@ -48,5 +50,17 @@ public class CustomerController {
     @DeleteMapping("/delete/{id}")
     public String deleteCustomer(@PathVariable Long id) {
         return customerService.deleteCustomer(id);
+    }
+
+    // add print to a customer
+    @PostMapping("/{customerId}/printers")
+    public Printer addPrinterToCustomer(@RequestBody Printer printer, @PathVariable Long customerId) {
+        return customerService.addPrinterToCustomer(customerId, printer);
+    }
+
+    // list printers by customer
+    @GetMapping("/{customerId}/printers")
+    public List<Printer> getPrintersByCustomerId(@PathVariable Long customerId) {
+        return customerService.getPrintersByCustomerId(customerId);
     }
 }

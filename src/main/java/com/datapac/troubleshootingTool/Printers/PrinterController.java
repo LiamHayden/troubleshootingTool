@@ -22,7 +22,7 @@ public class PrinterController {
     }
 
     // create
-    @PutMapping("/new")
+    @PostMapping("/new")
     public Printer createPrinter(@RequestBody Printer printer) {
         return printerService.createPrinter(printer);
     }
@@ -40,7 +40,7 @@ public class PrinterController {
     }
 
     // update
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public Printer updatePrinter(@RequestBody Printer printer, @PathVariable Long id) {
         return printerService.updatePrinter(printer, id);
     }

@@ -1,15 +1,21 @@
 package com.datapac.troubleshootingTool.Customers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+
+import com.datapac.troubleshootingTool.Printers.Printer;
+import com.datapac.troubleshootingTool.Printers.PrinterRepository;
 
 @Service
 public class CustomerService {
     private final CustomerRepository customerRepository;
+    private final PrinterRepository printerRepository;
 
-    public CustomerService(CustomerRepository customerRepository) {
+    public CustomerService(CustomerRepository customerRepository, PrinterRepository printerRepository) {
         this.customerRepository = customerRepository;
+        this.printerRepository = printerRepository;
     }
 
     // create
@@ -41,5 +47,24 @@ public class CustomerService {
     public String deleteCustomer(Long id) {
         customerRepository.deleteById(id);
         return "Customer deleted.";
+    }
+
+    // add printer
+    public Printer addPrinterToCustomer(Long customerId, Printer printer) {
+        Customer customer = customerRepository.findById(customerId)
+            .orElseThrow(() -> new RuntimeException("Customer not found."));
+
+            printer.setCustomer(customer);
+
+            customer.getPrinters().add(printer);
+
+            return printerRepository.save(printer);
+    }
+
+    // list printers by customer
+    public List<Printer> getPrintersByCustomerId(Long customerId) {
+        return customerRepository.findById(customerId)
+                .orElseThrow(() -> new RuntimeException("Customer not found."))
+                .getPrinters();
     }
 }
