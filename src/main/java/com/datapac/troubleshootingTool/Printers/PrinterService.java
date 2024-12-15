@@ -42,4 +42,8 @@ public class PrinterService {
         printerRepository.deleteById(id);
         return "Customer deleted.";
     }
+
+    public List<Printer> getPrintersByCustomerId(Long customerId) {
+        return printerRepository.findByCustomerId(customerId);
+    }
 }

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="UTF-8">
+<head>
+    <meta charset="UTF-8">
+    <!-- Greek God of discord and strife - trouble -->
+    <title>Eris</title> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body class="container">
+    <!-- Need to update this -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-5">
+        <a class="navbar-brand" href="#">Eris</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Search</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+            </ul>
+        </div>
+      </nav>
+      <!-- Customer details -->
+        <div class="container">
+            <h1>Customer Details</h1>
+            <!-- CUSTOMER -->
+            <div class="mb-3">
+                <label for="customerSelect" class="form-label">Customers:</label>
+                <select id="customerSelect" name="customerId" class="form-select"
+                        th:value="*{customerId}"
+                        onchange="fetchCustomerDetails(this.value)">
+                    <option value="" disabled selected>Select a Customer</option>
+                    <option th:each="customer : ${customers}"
+                            th:value="${customer.id}"
+                            th:text="${customer.name}">
+                    </option>
+                </select>
+            </div>
+
+            <!-- ACCESS URL - DYNAMIC -->
+             <div class="mb-3">
+                <label for="accessUrl" class="form-label">How to Access:</label>
+                <span id="accessUrl"
+                 th:text="${selectedCustomer != null ? selectedCustomer.accessUrl : 'No customer selected'}"></span>
+             </div>
+
+            <!-- PRINTER -->
+            <div class="mb-3">
+                <label for="printerModel" class="form-label">Printers:</label>
+                <select id="printerModel" name="printerModel" class="form-select" >
+                    <option value="" disabled selected>Select a Printer:</option>
+                    <option th:each="printer : ${printers}"
+                            th:value="${printer.id}"
+                            th:text="${printer.model}">
+                    </option>
+                </select>
+            </div>
+
+            <!-- ASSET TAG -->
+            <div class="mb-3">
+                <label for="assetTag" class="form-label">Asset Tag:</label>
+                <select id="assetTag" name="assetTag" class="form-select">
+                    <option value="" disabled selected>Asset Tag:</option>
+                    <option th:each="printer : ${printers}"
+                            th:value="${printer.assetTag}"
+                            th:text="${printer.assetTag}">
+                    </option>
+                </select>
+            </div>
+
+            <!-- SUBMIT -->
+             <div class="mt-4">
+                <button type="submit" class="btn btn-primary">Submit</button>
+             </div>
+        </div>
+
+
+    <script src="index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

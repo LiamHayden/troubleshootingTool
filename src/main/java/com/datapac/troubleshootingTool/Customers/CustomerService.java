@@ -1,7 +1,6 @@
 package com.datapac.troubleshootingTool.Customers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,9 @@ public class CustomerService {
 
     // read all
     public List<Customer> findAllCustomers() {
-        return customerRepository.findAll();
+        List<Customer> customers = customerRepository.findAll();
+        System.out.println("Found Customers: " + customers);
+        return customers;
     }
 
     // read by id
