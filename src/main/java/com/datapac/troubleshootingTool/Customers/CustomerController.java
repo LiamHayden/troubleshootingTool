@@ -2,6 +2,8 @@ package com.datapac.troubleshootingTool.Customers;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,22 +13,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.datapac.troubleshootingTool.Printers.Printer;
-import com.datapac.troubleshootingTool.Printers.PrinterService;
-import com.datapac.troubleshootingTool.dto.CustomerDetailsDTO;
 
 @Controller
 @RequestMapping("/customers")
 public class CustomerController {
     private final CustomerService customerService;
 
-    private final PrinterService printerService;
-
-    public CustomerController(CustomerService customerService, PrinterService printerService) {
+    public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
-        this.printerService = printerService;
     }
 
     // create
@@ -35,21 +31,32 @@ public class CustomerController {
         return customerService.createCustomer(customer);
     }
 
-    // read all
-    @GetMapping("/all")
-    public String findAllCustomers(Model model) {
-        List<Customer> customers = customerService.findAllCustomers();
-        System.out.println("Customers: " + customers);
-        model.addAttribute("customers", customers);
 
-        model.addAttribute("selectedCustomer", customers.isEmpty() ? null : customers.get(0));
-        return "index";
+    // GET PRINTERS
+    @GetMapping("/{customerId}/printers")
+    public List<Printer> getPrinters(@PathVariable Long customerId) {
+        return customerService.getPrintersByCustomer(customerId);
     }
 
-    // read by id
-    @GetMapping("/{id}")
-    public Customer findCustomerById(@PathVariable Long id) {
-        return customerService.findCustomerById(id);
+    // GET CUSTOMERS
+    // @GetMapping("/customers/{customerId}")
+    // public ResponseEntity<Customer> getCustomerById(@PathVariable Long customerId) {
+    //     Customer customer = customerService.findCustomerById(customerId);
+    //     if (customer != null) {
+    //         return ResponseEntity.ok(customer);
+    //     } else {
+    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    //     }
+    // }
+
+    @GetMapping("/customer/{id}")
+    public ResponseEntity<Customer> getCustomer(@PathVariable Long id) {
+        Customer customer = customerService.findCustomerById(id);
+        if (customer != null) {
+            return ResponseEntity.ok(customer);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
     // update
@@ -62,32 +69,5 @@ public class CustomerController {
     @DeleteMapping("/delete/{id}")
     public String deleteCustomer(@PathVariable Long id) {
         return customerService.deleteCustomer(id);
-    }
-
-    // add print to a customer
-    @PostMapping("/{customerId}/printers")
-    public Printer addPrinterToCustomer(@RequestBody Printer printer, @PathVariable Long customerId) {
-        return customerService.addPrinterToCustomer(customerId, printer);
-    }
-
-    // list printers by customer
-    @GetMapping("/{customerId}/printers")
-    public List<Printer> getPrintersByCustomerId(@PathVariable Long customerId) {
-        return customerService.getPrintersByCustomerId(customerId);
-    }
-
-    // get customer details
-    @GetMapping("/customer-details/{id}")
-    @ResponseBody
-    public CustomerDetailsDTO getCustomerDetails(@PathVariable Long id) {
-        Customer customer = customerService.findCustomerById(id);
-
-        List<Printer> printers = printerService.getPrintersByCustomerId(id);
-
-        CustomerDetailsDTO customerDetails = new CustomerDetailsDTO();
-        customerDetails.setAccessUrl(customer.getAccessUrl());
-        customerDetails.setPrinters(printers);
-
-        return customerDetails;
     }
 }

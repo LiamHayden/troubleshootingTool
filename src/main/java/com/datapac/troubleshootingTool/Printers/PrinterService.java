@@ -1,15 +1,23 @@
 package com.datapac.troubleshootingTool.Printers;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+
+import com.datapac.troubleshootingTool.Customers.Customer;
+import com.datapac.troubleshootingTool.Customers.CustomerRepository;
 
 @Service
 public class PrinterService {
     private final PrinterRepository printerRepository;
 
-    public PrinterService(PrinterRepository printerRepository) {
+    private CustomerRepository customerRepository;
+
+    public PrinterService(PrinterRepository printerRepository, CustomerRepository customerRepository) {
         this.printerRepository = printerRepository;
+        this.customerRepository = customerRepository;
     }
 
     // create
@@ -43,7 +51,12 @@ public class PrinterService {
         return "Customer deleted.";
     }
 
-    public List<Printer> getPrintersByCustomerId(Long customerId) {
-        return printerRepository.findByCustomerId(customerId);
+    public List<Printer> findPrintersByCustomerId(Long customerId) {
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        if (customer.isPresent()) {
+            return printerRepository.findPrintersByCustomer(customerId);
+        } else {
+            return Collections.emptyList();
+        }
     }
 }

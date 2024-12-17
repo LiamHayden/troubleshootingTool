@@ -1,89 +1,139 @@
 <!DOCTYPE html>
-<html lang="UTF-8">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- Greek God of discord and strife - trouble -->
-    <title>Eris</title> 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troubleshooting Tool</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<body class="container">
-    <!-- Need to update this -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light px-5">
-        <a class="navbar-brand" href="#">Eris</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Search</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-            </ul>
+    <body class="container bg-light">
+        <div class="bg-body">
+            <div class="border-bottom">
+                <nav class="navbar navbar-expand-lg navbar-light px-5">
+                    <a class="navbar-brand h1" href="#">Eris - Troubleshooting Tool</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarText">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link h2" href="#">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link h2" href="#">Search</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link h2" href="#">About</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <!-- LEFT -->
+                    <div class="col">
+                        <form class="p-5">
+                            <div class="form-group">
+                                <label for="customerSelect">Select Customer</label>
+                                <select id="customerSelect" class="form-control" name="customer">
+                                    <option value="">Select a customer</option>
+                                    <th:block th:if="${#lists.isEmpty(customers)}">
+                                        <option disabled>No customers found</option>
+                                    </th:block>
+                                    <th:block th:unless="${#lists.isEmpty(customers)}">
+                                        <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.name}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="printerSelect">Select Printer</label>
+                                <select id="printerSelect" class="form-control">
+                                    <option value="">Select a printer</option>
+                                </select>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="assetTag">Asset Tag</label>
+                                <input type="text" id="assetTag" class="form-control" readonly>
+                            </div>
+                            <div class="form-group mt-3">
+                                <a href="th:value='${customer.accessUrl}'"><label for="accessUrl">How to Connect</label></a>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- RIGHT -->
+                    <div class="col">
+                        <form class="p-5">
+                            <div class="form-group">
+                                <label for="printerSelect">Ticket</label>
+                                <input id="printerSelect" class="form-control" placeholder="T20240212.219">
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="printerSelect">Problems</label>
+                                <select id="printerSelect" class="form-control">
+                                    <option value="">Problems</option>
+                                </select>
+                                <div class="form-group mt-3">
+                                    <label for="printerSelect">Error Code</label>
+                                    <input id="printerSelect" class="form-control" placeholder="13.B9.D2 or 13.*">
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-      </nav>
-      <!-- Customer details -->
-        <div class="container">
-            <h1>Customer Details</h1>
-            <!-- CUSTOMER -->
-            <div class="mb-3">
-                <label for="customerSelect" class="form-label">Customers:</label>
-                <select id="customerSelect" name="customerId" class="form-select"
-                        th:value="*{customerId}"
-                        onchange="fetchCustomerDetails(this.value)">
-                    <option value="" disabled selected>Select a Customer</option>
-                    <option th:each="customer : ${customers}"
-                            th:value="${customer.id}"
-                            th:text="${customer.name}">
-                    </option>
-                </select>
-            </div>
-
-            <!-- ACCESS URL - DYNAMIC -->
-             <div class="mb-3">
-                <label for="accessUrl" class="form-label">How to Access:</label>
-                <span id="accessUrl"
-                 th:text="${selectedCustomer != null ? selectedCustomer.accessUrl : 'No customer selected'}"></span>
-             </div>
-
-            <!-- PRINTER -->
-            <div class="mb-3">
-                <label for="printerModel" class="form-label">Printers:</label>
-                <select id="printerModel" name="printerModel" class="form-select" >
-                    <option value="" disabled selected>Select a Printer:</option>
-                    <option th:each="printer : ${printers}"
-                            th:value="${printer.id}"
-                            th:text="${printer.model}">
-                    </option>
-                </select>
-            </div>
-
-            <!-- ASSET TAG -->
-            <div class="mb-3">
-                <label for="assetTag" class="form-label">Asset Tag:</label>
-                <select id="assetTag" name="assetTag" class="form-select">
-                    <option value="" disabled selected>Asset Tag:</option>
-                    <option th:each="printer : ${printers}"
-                            th:value="${printer.assetTag}"
-                            th:text="${printer.assetTag}">
-                    </option>
-                </select>
-            </div>
-
-            <!-- SUBMIT -->
-             <div class="mt-4">
-                <button type="submit" class="btn btn-primary">Submit</button>
-             </div>
-        </div>
 
 
-    <script src="index.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
+        <script>
+            $(document).ready(function() {
+            // When a customer is selected
+            $('#customerSelect').change(function() {
+                var customerId = $(this).val();
+                window.console&&console.log(customerId);
+                
+                if (customerId) {
+                    // Get printers associated with the selected customer
+                    $.get('/index/customers/' + customerId + '/printers', function(printers) { 
+                        $('#printerSelect').empty().append('<option value="">Select a printer</option>');
+                        $.each(printers, function(i, printer) {
+                            $('#printerSelect').append('<option value="' + printer.id + '">' + printer.model + '</option>');
+                        });
+                    });
+
+                    // Get customer details and update the Access URL
+                    try {
+                    $.get('/index/customer/' + customerId, function(customer) {
+                        if (customer) {
+                            $('#accessUrl').val(customer.accessUrl);
+                        } else {
+                            alert("Customer not found.");
+                        }
+                    })
+                } catch (err) {
+                    alert("Error fetching customer details." + err);
+                }
+
+                }
+            });
+
+            // When a printer is selected
+            $('#printerSelect').change(function() {
+                var printerId = $(this).val();
+                
+                if (printerId) {
+                    // Get printer details and update the Asset Tag
+                    $.get('/printers/' + printerId, function(printer) {
+                        $('#assetTag').val(printer.assettag);
+                    });
+                }
+            });
+        });
+
+
+        </script>
+
+    </body>
 </html>
