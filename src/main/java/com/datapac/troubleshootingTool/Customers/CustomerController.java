@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +30,6 @@ public class CustomerController {
         return customerService.createCustomer(customer);
     }
 
-
     // GET PRINTERS
     @GetMapping("/{customerId}/printers")
     public List<Printer> getPrinters(@PathVariable Long customerId) {
@@ -40,13 +38,14 @@ public class CustomerController {
 
     // GET CUSTOMERS
     // @GetMapping("/customers/{customerId}")
-    // public ResponseEntity<Customer> getCustomerById(@PathVariable Long customerId) {
-    //     Customer customer = customerService.findCustomerById(customerId);
-    //     if (customer != null) {
-    //         return ResponseEntity.ok(customer);
-    //     } else {
-    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-    //     }
+    // public ResponseEntity<Customer> getCustomerById(@PathVariable Long
+    // customerId) {
+    // Customer customer = customerService.findCustomerById(customerId);
+    // if (customer != null) {
+    // return ResponseEntity.ok(customer);
+    // } else {
+    // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    // }
     // }
 
     @GetMapping("/customer/{id}")
