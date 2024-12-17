@@ -1,18 +1,15 @@
-CREATE TABLE IF NOT EXISTS customer (
-    customer_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255),
-    accessUrl VARCHAR(255)
-    );
+-- Inserting sample data into the customer table
+INSERT INTO customer (name, access_url) VALUES
+('John Doe', 'http://example.com/john'),
+('Jane Smith', 'http://example.com/jane');
 
-    CREATE TABLE IF NOT EXISTS PRINTER (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    customer_id BIGINT,
-    model VARCHAR(255),
-    assetTag BIGINT,
-    FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
-    );
+-- Inserting sample data into the printer table
+INSERT INTO printer (model, assettag) VALUES
+('HP LaserJet 1010', 12345),
+('Canon PIXMA 2000', 67890);
 
-
-INSERT INTO customer (name, accessUrl) VALUES ('OPW', 'www.google.com');
-
-INSERT INTO printer (customer_id, model, assetTag) VALUES (1, 'E87640', 91964);
+-- Associating customers with printers in the join table
+INSERT INTO customer_printer (customer_id, printer_id) VALUES
+(1, 1),  -- John Doe with HP LaserJet 1010
+(1, 2),  -- John Doe with Canon PIXMA 2000
+(2, 2);  -- Jane Smith with Canon PIXMA 2000

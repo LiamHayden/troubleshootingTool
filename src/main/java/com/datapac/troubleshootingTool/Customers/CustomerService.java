@@ -1,6 +1,9 @@
 package com.datapac.troubleshootingTool.Customers;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -23,10 +26,16 @@ public class CustomerService {
     }
 
     // read all
-    public List<Customer> findAllCustomers() {
+    public List<Customer> getAllCustomers() {
         List<Customer> customers = customerRepository.findAll();
-        System.out.println("Found Customers: " + customers);
+        System.out.println("CustomerService: " + customers);  // Check the data here
         return customers;
+    }
+
+    // find all printers by customer
+    public List<Printer> getPrintersByCustomer(Long customerId) {
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        return customer.map(c -> new ArrayList<>(c.getPrinters())).orElseGet(null);
     }
 
     // read by id
@@ -50,22 +59,6 @@ public class CustomerService {
         return "Customer deleted.";
     }
 
-    // add printer
-    public Printer addPrinterToCustomer(Long customerId, Printer printer) {
-        Customer customer = customerRepository.findById(customerId)
-            .orElseThrow(() -> new RuntimeException("Customer not found."));
 
-            printer.setCustomer(customer);
 
-            customer.getPrinters().add(printer);
-
-            return printerRepository.save(printer);
-    }
-
-    // list printers by customer
-    public List<Printer> getPrintersByCustomerId(Long customerId) {
-        return customerRepository.findById(customerId)
-                .orElseThrow(() -> new RuntimeException("Customer not found."))
-                .getPrinters();
-    }
 }

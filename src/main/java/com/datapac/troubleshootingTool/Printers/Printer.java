@@ -1,42 +1,47 @@
 package com.datapac.troubleshootingTool.Printers;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.datapac.troubleshootingTool.Customers.Customer;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "printer")
 public class Printer {
-    // variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String model;
+    private Integer assettag;
 
-    private int assetTag;
-
-    // many-to-one relationship
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
-    @JsonBackReference
-    private Customer customer;
+    @ManyToMany
+    @JoinTable(
+      name = "customer_printer", 
+      joinColumns = @JoinColumn(name = "printer_id"), 
+      inverseJoinColumns = @JoinColumn(name = "customer_id"))
+      @JsonBackReference
+      @JsonIgnoreProperties({"printers"})
+      private Set<Customer> customers = new HashSet<>();
 
     // constructors
 
     public Printer(){}
 
-    public Printer(String model, int assetTag, Customer customer) {
+    public Printer(String model, Integer assettag) {
         this.model = model;
-        this.assetTag = assetTag;
-        this.customer = customer;
-    }
+        this.assettag = assettag;
+    }    
 
     // getters and setters
     public String getModel() {
@@ -48,19 +53,23 @@ public class Printer {
     }
 
     public int getAssetTag() {
-        return this.assetTag;
+        return this.assettag;
     }
 
-    public void setAssetTag(int assetTag) {
-        this.assetTag = assetTag;
+    public void setAssetTag(int assettag) {
+        this.assettag = assettag;
     }
 
     // customer get/set
-    public Customer getCustomer() {
-        return customer;
+    public Set<Customer> getCustomers() {
+        return customers;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomers(Set<Customer> customers) {
+        this.customers = customers;
+    }    
+
+    public Long getId() {
+        return this.id;
     }
 }
