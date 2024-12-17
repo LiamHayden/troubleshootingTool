@@ -1,40 +1,48 @@
-// function updatePrinters(customerId) {
-//     if (!customerId || customerId === 'undefined') {
-//         console.error('Invalid customer ID:', customerId);
-//         return;  // Don't proceed if the ID is invalid
-//     }
+$(document).ready(function () {
+  // When a customer is selected
+  $('#customerSelect').change(function () {
+    var customerId = $(this).val();
+    window.console && console.log(customerId);
 
-//     console.log('Fetching printer details for customer ID:', customerId); // Debugging line
+    if (customerId) {
+      // Get printers associated with the selected customer
+      $.get('/index/customers/' + customerId + '/printers', function (printers) {
+        $('#printerSelect').empty().append('<option value="">Select a printer</option>');
+        $.each(printers, function (i, printer) {
+          $('#printerSelect').append('<option value="' + printer.id + '">' + printer.model + '</option>');
+        });
+      });
 
-//     try {
-//         fetch(`/customers/${customerId}/details`)
-//             .then(response => response.json())
-//             .then(data => {
-//                 // update accessUrl
-//                 document.getElementById('accessUrl').textContent = data.accessUrl;
+      // Get customer details and update the Access URL
+      try {
+        $.get('/index/customer/' + customerId, function (customer) {
+          if (customer) {
+            $('#accessUrl').val(customer.accessUrl);
+          } else {
+            alert("Customer not found.");
+          }
+        })
+      } catch (err) {
+        alert("Error fetching customer details." + err);
+      }
 
-//                 // update printer model
-//                 const printerModelSelect = document.getElementById('printerModel');
-//                 printerModelSelect.innerHTML = '<option value="" disabled selected> Select a Printer</option>';
-//                 data.forEach(printer => {
-//                     const option = document.createElement('option');
-//                     option.value = printer.id;
-//                     option.textContent = `${printer.model}`;
-//                     printerModelSelect.appendChild(option);
-//                 });
+    }
+  });
 
-//                 // Uncomment if you want to add assetTag functionality
-//                 // const assetTagSelect = document.getElementById('assetTag');
-//                 // assetTagSelect.innerHTML = '<option value="" disabled selected> Asset Tag:</option>';
-//                 // data.printers.forEach(printer => {
-//                 //     const option = document.createElement('option');
-//                 //     option.value = printer.assetTag;
-//                 //     option.textContent = printer.assetTag;
-//                 //     assetTagSelect.appendChild(option);
-//                 // });
-//             });
-//     } catch(error) {
-//         console.error('Error fetching printer details:', error);
-//         alert('Failed to fetch printer details. Please try again later.');
-//     }
-// }
+  // When a printer is selected
+  $('#printerSelect').change(function () {
+    var printerId = $(this).val();
+
+    if (printerId) {
+      // Get printer details and update the Asset Tag
+      $.get('/printers/' + printerId, function (printer) {
+        $('#assetTag').val(printer.assettag);
+      });
+    }
+  });
+});
+
+// DISPLAY TROUBLESHOOTING SECTION
+function displayBottomContainer() {
+  document.getElementById("bottom-container").style.display = "block";
+}

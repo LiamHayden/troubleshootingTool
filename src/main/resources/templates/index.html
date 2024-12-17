@@ -1,139 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Troubleshooting Tool</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-    <body class="container bg-light">
-        <div class="bg-body">
-            <div class="border-bottom">
-                <nav class="navbar navbar-expand-lg navbar-light px-5">
-                    <a class="navbar-brand h1" href="#">Eris - Troubleshooting Tool</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarText">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link h2" href="#">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link h2" href="#">Search</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link h2" href="#">About</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
 
-            <div class="container">
-                <div class="row">
-                    <!-- LEFT -->
+    <style>
+        #bottom-container {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="container bg-light">
+    <div class="bg-body">
+        <!-- TOP -->
+        <div class="border-bottom">
+            <nav class="navbar navbar-expand-lg navbar-light px-5">
+                <a class="navbar-brand h1" href="/index">Eris - Troubleshooting
+                    Tool</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link h2" href="/index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link h2" href="#">Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link h2" href="#">About</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <!-- LEFT -->
+                <div class="col">
+                    <form class="p-5">
+                        <div class="form-group">
+                            <label for="customerSelect">Select Customer</label>
+                            <select id="customerSelect" class="form-control" name="customer">
+                                <option value="">Select a customer</option>
+                                <th:block th:if="${#lists.isEmpty(customers)}">
+                                    <option disabled>No customers found</option>
+                                </th:block>
+                                <th:block th:unless="${#lists.isEmpty(customers)}">
+                                    <option th:each="customer : ${customers}" th:value="${customer.id}"
+                                        th:text="${customer.name}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="printerSelect">Select Printer</label>
+                            <select id="printerSelect" class="form-control">
+                                <option value="">Select a printer</option>
+                            </select>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="assetTag">Asset Tag</label>
+                            <input type="text" id="assetTag" class="form-control" readonly>
+                        </div>
+                        <div class="form-group mt-3">
+                            <a href="th:value='${customer.accessUrl}'"><label for="accessUrl">How to Connect</label></a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- RIGHT -->
+                <div class="col">
+                    <form class="p-5">
+                        <div class="form-group">
+                            <label for="printerSelect">Ticket</label>
+                            <input id="printerSelect" class="form-control" placeholder="T20240212.219">
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="printerSelect">Problems</label>
+                            <select id="printerSelect" class="form-control">
+                                <option value="">Problems</option>
+                            </select>
+                            <div class="form-group mt-3">
+                                <label for="printerSelect">Error Code</label>
+                                <input id="printerSelect" class="form-control" placeholder="13.B9.D2 or 13.*">
+                            </div>
+                    </form>
+
+                    <!-- BUTTON -->
                     <div class="col">
-                        <form class="p-5">
-                            <div class="form-group">
-                                <label for="customerSelect">Select Customer</label>
-                                <select id="customerSelect" class="form-control" name="customer">
-                                    <option value="">Select a customer</option>
-                                    <th:block th:if="${#lists.isEmpty(customers)}">
-                                        <option disabled>No customers found</option>
-                                    </th:block>
-                                    <th:block th:unless="${#lists.isEmpty(customers)}">
-                                        <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.name}"></option>
-                                    </th:block>
-                                </select>
-                            </div>
+                        <form class="">
                             <div class="form-group mt-3">
-                                <label for="printerSelect">Select Printer</label>
-                                <select id="printerSelect" class="form-control">
-                                    <option value="">Select a printer</option>
-                                </select>
-                            </div>
-                            <div class="form-group mt-3">
-                                <label for="assetTag">Asset Tag</label>
-                                <input type="text" id="assetTag" class="form-control" readonly>
-                            </div>
-                            <div class="form-group mt-3">
-                                <a href="th:value='${customer.accessUrl}'"><label for="accessUrl">How to Connect</label></a>
+                                <button type="button" class="btn btn-primary px-3 h4"
+                                    onclick="displayBottomContainer()">Start</button>
                             </div>
                         </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- BOTTOM -->
+        <div class="container" id="bottom-container">
+            <div class="pb-3">
+                <div class="row">
+                    <!-- LEFT -->
+                    <div class="col d-flex align-items-stretch">
+                        <div class="border border-dark pb-5">
+                            <div class="p-5 text-center">
+                                <div class="">
+                                    <div class="">
+                                        <h1>Step 1</h1>
+                                    </div>
+                                    <div class="py-3">
+                                        <h3>Are a solid green and flashing amber LED at the network connection?</h3>
+                                    </div>
+                                </div>
+                                <div class="mt-5">
+                                    <div class="row">
+                                        <div class="col">
+                                            <button type="button" class="btn btn-primary px-3 h4">Yes</button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-danger px-3 h4">No</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- RIGHT -->
-                    <div class="col">
-                        <form class="p-5">
-                            <div class="form-group">
-                                <label for="printerSelect">Ticket</label>
-                                <input id="printerSelect" class="form-control" placeholder="T20240212.219">
-                            </div>
-                            <div class="form-group mt-3">
-                                <label for="printerSelect">Problems</label>
-                                <select id="printerSelect" class="form-control">
-                                    <option value="">Problems</option>
-                                </select>
-                                <div class="form-group mt-3">
-                                    <label for="printerSelect">Error Code</label>
-                                    <input id="printerSelect" class="form-control" placeholder="13.B9.D2 or 13.*">
+                    <div class="col d-flex align-items-stretch">
+                        <div class="border border-dark">
+                            <div class="p-5 text-center">
+                                <div class="">
+                                    <h1>Support</h1>
                                 </div>
-                        </form>
+                                <div class="py-3">
+                                    <h3>The system is going to retrieve the data based on the documentation i.e:</h3>
+                                </div>
+                                <div class="">
+                                    <img src="/images/netowrkPort.jpg"
+                                        alt="Network port with a solid green light and flashing amber light.">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    </div>
 
 
-        <script>
-            $(document).ready(function() {
-            // When a customer is selected
-            $('#customerSelect').change(function() {
-                var customerId = $(this).val();
-                window.console&&console.log(customerId);
-                
-                if (customerId) {
-                    // Get printers associated with the selected customer
-                    $.get('/index/customers/' + customerId + '/printers', function(printers) { 
-                        $('#printerSelect').empty().append('<option value="">Select a printer</option>');
-                        $.each(printers, function(i, printer) {
-                            $('#printerSelect').append('<option value="' + printer.id + '">' + printer.model + '</option>');
-                        });
-                    });
+    <script src="js/index.js"></script>
 
-                    // Get customer details and update the Access URL
-                    try {
-                    $.get('/index/customer/' + customerId, function(customer) {
-                        if (customer) {
-                            $('#accessUrl').val(customer.accessUrl);
-                        } else {
-                            alert("Customer not found.");
-                        }
-                    })
-                } catch (err) {
-                    alert("Error fetching customer details." + err);
-                }
+</body>
 
-                }
-            });
-
-            // When a printer is selected
-            $('#printerSelect').change(function() {
-                var printerId = $(this).val();
-                
-                if (printerId) {
-                    // Get printer details and update the Asset Tag
-                    $.get('/printers/' + printerId, function(printer) {
-                        $('#assetTag').val(printer.assettag);
-                    });
-                }
-            });
-        });
-
-
-        </script>
-
-    </body>
 </html>

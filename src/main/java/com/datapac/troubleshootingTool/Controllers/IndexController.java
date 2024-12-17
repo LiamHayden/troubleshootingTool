@@ -27,7 +27,7 @@ public class IndexController {
     }
 
     // INDEX
-    @GetMapping("/customers")
+    @GetMapping("/index")
     public String index(Model model) {
         List<Customer> customers = customerService.getAllCustomers();
         model.addAttribute("customers", customers);
@@ -36,7 +36,7 @@ public class IndexController {
 
     // @GetMapping("{customerId}/printers")
     // public List<Printer> findPrintersByCustomerId(Long customerId) {
-    //     return printerService.findAllPrinters();
+    // return printerService.findAllPrinters();
     // }
 
     // GET PRINTERS BASED ON CUSTOMER ID
@@ -60,5 +60,5 @@ public class IndexController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-    
+
 }
