@@ -20,7 +20,7 @@
         <!-- TOP -->
         <div class="border-bottom">
             <nav class="navbar navbar-expand-lg navbar-light px-5">
-                <a class="navbar-brand h1" href="/index">Eris - Troubleshooting
+                <a class="navbar-brand h1" href="/index">Troubleshooting
                     Tool</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
                     aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,11 +67,13 @@
                             </select>
                         </div>
                         <div class="form-group mt-3">
-                            <label for="assetTag">Asset Tag</label>
-                            <input type="text" id="assetTag" class="form-control" readonly>
+                            <label for="assetTag">Select Asset Tag</label>
+                            <select id="assetTag" class="form-control">
+                                <option value="">Select an asset tag</option>
+                            </select>
                         </div>
                         <div class="form-group mt-3">
-                            <a href="th:value='${customer.accessUrl}'"><label for="accessUrl">How to Connect</label></a>
+                            <a id="accessUrl" th:href="@{'/customer.accessUrl}"><label >How to Connect</label></a>
                         </div>
                     </form>
                 </div>
@@ -87,6 +89,7 @@
                             <label for="printerSelect">Problems</label>
                             <select id="printerSelect" class="form-control">
                                 <option value="">Problems</option>
+                                <option vlaue="">Scan to Email</option>
                             </select>
                             <div class="form-group mt-3">
                                 <label for="printerSelect">Error Code</label>
@@ -100,6 +103,7 @@
                             <div class="form-group mt-3">
                                 <button type="button" class="btn btn-primary px-3 h4"
                                     onclick="displayBottomContainer()">Start</button>
+                                    <button type="button" class="btn btn-warning px-3 h4">Report Issue</button>
                             </div>
                         </form>
                     </div>

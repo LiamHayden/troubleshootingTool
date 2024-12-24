@@ -34,11 +34,6 @@ public class IndexController {
         return "index";
     }
 
-    // @GetMapping("{customerId}/printers")
-    // public List<Printer> findPrintersByCustomerId(Long customerId) {
-    // return printerService.findAllPrinters();
-    // }
-
     // GET PRINTERS BASED ON CUSTOMER ID
     @GetMapping("/index/customers/{customerId}/printers")
     public ResponseEntity<List<Printer>> getPrintersByCustomerId(@PathVariable Long customerId) {
