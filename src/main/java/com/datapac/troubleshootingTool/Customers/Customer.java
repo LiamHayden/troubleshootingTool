@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.datapac.troubleshootingTool.Printers.Printer;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
@@ -20,21 +19,19 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String name;
     private String accessUrl;
 
     @ManyToMany
-    @JoinTable(
-        name = "customer_printer", 
-        joinColumns = @JoinColumn(name = "customer_id"), 
-        inverseJoinColumns = @JoinColumn(name = "printer_id"))
+    @JoinTable(name = "customer_printer", joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "printer_id"))
     @JsonManagedReference
     private Set<Printer> printers = new HashSet<>();
 
     // constructors
 
-    public Customer(){}
+    public Customer() {
+    }
 
     public Customer(String name, String accessUrl, Set<Printer> printers) {
         this.name = name;

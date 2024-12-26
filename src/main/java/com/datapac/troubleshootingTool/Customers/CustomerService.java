@@ -7,16 +7,13 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.datapac.troubleshootingTool.Printers.Printer;
-import com.datapac.troubleshootingTool.Printers.PrinterRepository;
 
 @Service
 public class CustomerService {
     private final CustomerRepository customerRepository;
-    private final PrinterRepository printerRepository;
 
-    public CustomerService(CustomerRepository customerRepository, PrinterRepository printerRepository) {
+    public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
-        this.printerRepository = printerRepository;
     }
 
     // create

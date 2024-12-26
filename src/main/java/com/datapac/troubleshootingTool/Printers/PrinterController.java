@@ -2,8 +2,6 @@ package com.datapac.troubleshootingTool.Printers;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 
 @RestController
 @RequestMapping("/printers")
@@ -54,14 +51,15 @@ public class PrinterController {
     }
 
     // GET PRINTERS BASED ON CUSTOMER ID
-    //@GetMapping("/customers/{customerId}/printers")
-    // public ResponseEntity<List<Printer>> getPrintersByCustomerId(@PathVariable Long customerId) {
-    //     List<Printer> printers = printerService.findPrintersByCustomerId(customerId);
-    //     if (printers != null && !printers.isEmpty()) {
-    //         return ResponseEntity.ok(printers);
-    //     } else {
-    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-    //     }
+    // @GetMapping("/customers/{customerId}/printers")
+    // public ResponseEntity<List<Printer>> getPrintersByCustomerId(@PathVariable
+    // Long customerId) {
+    // List<Printer> printers = printerService.findPrintersByCustomerId(customerId);
+    // if (printers != null && !printers.isEmpty()) {
+    // return ResponseEntity.ok(printers);
+    // } else {
+    // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    // }
     // }
 
 }
