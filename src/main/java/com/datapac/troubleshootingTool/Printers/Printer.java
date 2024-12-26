@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.datapac.troubleshootingTool.Customers.Customer;
+import com.datapac.troubleshootingTool.Tickets.Ticket;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -14,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,22 +28,24 @@ public class Printer {
     private Integer assettag;
 
     @ManyToMany
-    @JoinTable(
-      name = "customer_printer", 
-      joinColumns = @JoinColumn(name = "printer_id"), 
-      inverseJoinColumns = @JoinColumn(name = "customer_id"))
-      @JsonBackReference
-      @JsonIgnoreProperties({"printers"})
-      private Set<Customer> customers = new HashSet<>();
+    @JoinTable(name = "customer_printer", joinColumns = @JoinColumn(name = "printer_id"), inverseJoinColumns = @JoinColumn(name = "customer_id"))
+    @JsonBackReference
+    @JsonIgnoreProperties({ "printers" })
+    private Set<Customer> customers = new HashSet<>();
+
+    // one-to-many tickets
+    @OneToMany(mappedBy = "printer")
+    private Set<Ticket> Tickets;
 
     // constructors
 
-    public Printer(){}
+    public Printer() {
+    }
 
     public Printer(String model, Integer assettag) {
         this.model = model;
         this.assettag = assettag;
-    }    
+    }
 
     // getters and setters
     public String getModel() {
@@ -67,7 +71,7 @@ public class Printer {
 
     public void setCustomers(Set<Customer> customers) {
         this.customers = customers;
-    }    
+    }
 
     public Long getId() {
         return this.id;

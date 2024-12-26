@@ -13,3 +13,8 @@ INSERT INTO customer_printer (customer_id, printer_id) VALUES
 (1, 1),  -- John Doe with HP LaserJet 1010
 (1, 2),  -- John Doe with Canon PIXMA 2000
 (2, 2);  -- Jane Smith with Canon PIXMA 2000
+
+-- Inserting sample data into the ticket table
+INSERT INTO ticket (number, printer_id) VALUES
+('T12122024.357', 1),
+('T10042012.321', 2);
