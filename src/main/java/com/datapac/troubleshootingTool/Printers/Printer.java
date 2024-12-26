@@ -4,9 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.datapac.troubleshootingTool.Customers.Customer;
+import com.datapac.troubleshootingTool.ErrorCode.ErrorCode;
 import com.datapac.troubleshootingTool.Tickets.Ticket;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +34,12 @@ public class Printer {
     @JsonBackReference
     @JsonIgnoreProperties({ "printers" })
     private Set<Customer> customers = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "error_code_printer", joinColumns = @JoinColumn(name = "printer_id"), inverseJoinColumns = @JoinColumn(name = "error_code_id"))
+    @JsonManagedReference
+    @JsonIgnoreProperties({ "printers" })
+    private Set<ErrorCode> errorCOdes = new HashSet<>();
 
     // one-to-many tickets
     @OneToMany(mappedBy = "printer")

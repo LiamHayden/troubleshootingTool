@@ -55,8 +55,8 @@ public class PrinterService {
         Optional<Customer> customer = customerRepository.findById(customerId);
         if (customer.isPresent()) {
             return printerRepository.findPrintersByCustomer(customerId);
-        } else {
-            return Collections.emptyList();
         }
+
+        return Collections.emptyList();
     }
 }

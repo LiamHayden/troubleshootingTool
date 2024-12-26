@@ -10,11 +10,22 @@ INSERT INTO printer (model, assettag) VALUES
 
 -- Associating customers with printers in the join table
 INSERT INTO customer_printer (customer_id, printer_id) VALUES
-(1, 1),  -- John Doe with HP LaserJet 1010
-(1, 2),  -- John Doe with Canon PIXMA 2000
-(2, 2);  -- Jane Smith with Canon PIXMA 2000
+(1, 1),  -- Office of Public Works with HP Color LaserJet Managed MFP E877
+(1, 2),  -- Office of Public Works with HP Color LaserJet Enterprise MFP X58045dn
+(2, 2);  -- Department of Housing with HP Color LaserJet Enterprise MFP X58045dn
 
 -- Inserting sample data into the ticket table
 INSERT INTO ticket (number, printer_id) VALUES
 ('T12122024.357', 1),
 ('T10042012.321', 2);
+
+-- Inserting sample data into the error_code table
+INSERT INTO error_code (code) VALUES
+('13.B9.D4'),
+('49.3c.07');
+
+-- Associating error codes with printers in the join table
+INSERT INTO error_code_printer (error_code_id, printer_id) VALUES
+(1, 1),  
+(1, 2),  
+(2, 2);
