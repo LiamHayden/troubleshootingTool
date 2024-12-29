@@ -20,3 +20,26 @@ CREATE TABLE customer_printer (
     FOREIGN KEY (customer_id) REFERENCES customer(id),
     FOREIGN KEY (printer_id) REFERENCES printer(id)
 );
+
+-- Creating Ticket table
+CREATE TABLE ticket (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    number VARCHAR(255) NOT NULL,
+    printer_id BIGINT NOT NULL,
+    FOREIGN KEY (printer_id) REFERENCES printer(id)
+);
+
+-- Creating Error Code table
+CREATE TABLE error_code (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(255) NOT NULL
+);
+
+-- Creating the join table for the many-to-many relationship
+CREATE TABLE error_code_printer (
+    error_code_id BIGINT,
+    printer_id BIGINT,
+    PRIMARY KEY (error_code_id, printer_id),
+    FOREIGN KEY (error_code_id) REFERENCES error_code(id),
+    FOREIGN KEY (printer_id) REFERENCES printer(id)
+);
