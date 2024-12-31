@@ -1,8 +1,10 @@
 package com.datapac.troubleshootingTool.Tickets;
 
+import com.datapac.troubleshootingTool.AssetTag.AssetTag;
 import com.datapac.troubleshootingTool.Printers.Printer;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,14 +20,17 @@ public class Ticket {
 
   private String number;
 
+  // many-to-one relationship with assetTag
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "asset_tag_id")
+  private AssetTag assetTag;
+
   // one-to-many printer_id
   @ManyToOne
   @JoinColumn(name = "printer_id", nullable = false)
   private Printer printer;
 
   // one-to-many customer_id
-
-  // one-to-many asset_tag_id
 
   // one-to-many error_code_id
 
@@ -53,6 +58,14 @@ public class Ticket {
 
   public void setPrinter(Printer printer) {
     this.printer = printer;
+  }
+
+  public AssetTag getAssetTag() {
+    return assetTag;
+  }
+
+  public void setAssetTag(AssetTag assetTag) {
+      this.assetTag = assetTag;
   }
 
 }
