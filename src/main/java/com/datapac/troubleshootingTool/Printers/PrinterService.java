@@ -40,7 +40,6 @@ public class PrinterService {
         Printer foundPrinter = printerRepository.findById(id).get();
 
         foundPrinter.setModel(printer.getModel());
-        foundPrinter.setAssetTag(printer.getAssetTag());
 
         return printerRepository.save(foundPrinter);
     }

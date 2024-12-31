@@ -3,14 +3,18 @@ package com.datapac.troubleshootingTool.Printers;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.datapac.troubleshootingTool.AssetTag.AssetTag;
 import com.datapac.troubleshootingTool.Customers.Customer;
 import com.datapac.troubleshootingTool.ErrorCode.ErrorCode;
 import com.datapac.troubleshootingTool.Tickets.Ticket;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,6 +22,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,7 +32,10 @@ public class Printer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String model;
-    private Integer assettag;
+
+    @OneToOne(mappedBy = "printer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    // @JsonIgnore // prevent infinte loop
+    private AssetTag assetTag;
 
     @ManyToMany
     @JoinTable(name = "customer_printer", joinColumns = @JoinColumn(name = "printer_id"), inverseJoinColumns = @JoinColumn(name = "customer_id"))
@@ -50,9 +58,8 @@ public class Printer {
     public Printer() {
     }
 
-    public Printer(String model, Integer assettag) {
+    public Printer(String model) {
         this.model = model;
-        this.assettag = assettag;
     }
 
     // getters and setters
@@ -64,12 +71,14 @@ public class Printer {
         this.model = model;
     }
 
-    public int getAssetTag() {
-        return this.assettag;
+    // assetTag get/set
+    public AssetTag getAssetTag() {
+        return assetTag;
     }
 
-    public void setAssetTag(int assettag) {
-        this.assettag = assettag;
+    public void setAssetTag(AssetTag assetTag) {
+        this.assetTag = assetTag;
+        assetTag.setPrinter(this);
     }
 
     // customer get/set
