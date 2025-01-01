@@ -5,10 +5,18 @@ CREATE TABLE customer (
     access_url VARCHAR(255) NOT NULL
 );
 
+-- Creating Asset Tag table
+CREATE TABLE asset_tag (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    tag_number VARCHAR(255) NOT NULL
+);
+
 -- Creating Printer table
 CREATE TABLE printer (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    model VARCHAR(255) NOT NULL
+    model VARCHAR(255) NOT NULL,
+    asset_tag_id BIGINT NOT NULL,
+    FOREIGN KEY (asset_tag_id) REFERENCES asset_tag(id)
 );
 
 -- Creating the join table for the many-to-many relationship
@@ -32,16 +40,6 @@ CREATE TABLE ticket (
 CREATE TABLE error_code (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     code VARCHAR(255) NOT NULL
-);
-
--- Creating Asset Tag table
-CREATE TABLE asset_tag (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    tag_number VARCHAR(255) NOT NULL,
-    printer_id BIGINT NOT NULL,
-    ticket_id BIGINT NOT NULL,
-    FOREIGN KEY (printer_id) REFERENCES printer(id),
-    FOREIGN KEY (ticket_id) REFERENCES ticket(id)
 );
 
 -- Creating the join table for the many-to-many relationship

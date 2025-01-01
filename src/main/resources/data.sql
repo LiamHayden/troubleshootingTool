@@ -3,11 +3,17 @@ INSERT INTO customer (name, access_url) VALUES
 ('Office of Public Works', 'http://example.com/'),
 ('Department of Housing', 'http://example.com/doh');
 
+-- Inserting sample data into the asset_tag table
+INSERT INTO asset_tag (tag_number) VALUES
+('91938'),
+('91940'),
+('91918');
+
 -- Inserting sample data into the printer table
-INSERT INTO printer (model) VALUES
-('HP Color LaserJet Managed MFP E877'),
-('HP Color LaserJet Enterprise MFP X58045dn'),
-('HP Color LaserJet Managed MFP E87640');
+INSERT INTO printer (model, asset_tag_id) VALUES
+('HP Color LaserJet Managed MFP E877', 1),
+('HP Color LaserJet Enterprise MFP X58045dn', 2),
+('HP Color LaserJet Managed MFP E87640', 3);
 
 -- Associating customers with printers in the join table
 INSERT INTO customer_printer (customer_id, printer_id) VALUES
@@ -31,10 +37,3 @@ INSERT INTO error_code_printer (error_code_id, printer_id) VALUES
 (1, 1),  
 (1, 2),  
 (2, 2);
-
-
--- Inserting sample data into the asset_tag table
-INSERT INTO asset_tag (tag_number, printer_id, ticket_id) VALUES
-('91938', 1, 1),
-('91940', 2, 3),
-('91918', 3, 2);
