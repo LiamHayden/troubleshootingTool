@@ -21,7 +21,7 @@ public class Ticket {
   private String number;
 
   // many-to-one relationship with assetTag
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name = "asset_tag_id")
   private AssetTag assetTag;
 

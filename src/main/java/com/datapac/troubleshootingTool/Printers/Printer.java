@@ -34,7 +34,7 @@ public class Printer {
     private String model;
 
     @OneToOne(mappedBy = "printer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    // @JsonIgnore // prevent infinte loop
+    @JsonBackReference
     private AssetTag assetTag;
 
     @ManyToMany

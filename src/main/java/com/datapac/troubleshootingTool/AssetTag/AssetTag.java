@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.datapac.troubleshootingTool.Printers.Printer;
 import com.datapac.troubleshootingTool.Tickets.Ticket;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,9 +27,10 @@ public class AssetTag {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "printer_id")
+    @JsonManagedReference
     private Printer printer;
 
-    @OneToMany(mappedBy = "assetTag", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "assetTag")
     private List<Ticket> tickets;
 
     public AssetTag() {

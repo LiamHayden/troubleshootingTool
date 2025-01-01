@@ -27,7 +27,7 @@ public class IndexController {
     }
 
     // INDEX
-    @GetMapping("/index")
+    @GetMapping("")
     public String index(Model model) {
         List<Customer> customers = customerService.getAllCustomers();
         model.addAttribute("customers", customers);
