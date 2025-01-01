@@ -30,6 +30,12 @@ public class CustomerController {
         return customerService.createCustomer(customer);
     }
 
+    // read all
+    @GetMapping("/all")
+    public List<Customer> findAllCustomers() {
+        return customerService.getAllCustomers();
+    }
+
     // GET PRINTERS
     @GetMapping("/{customerId}/printers")
     public List<Printer> getPrinters(@PathVariable Long customerId) {
