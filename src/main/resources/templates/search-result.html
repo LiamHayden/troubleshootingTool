@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Troubleshooting Tool - Search</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    <body class="container bg-light">
+        <div class="bg-body">
+            <div class="border-bottom">
+                <nav class="navbar navbar-expand-lg navbar-light px-5">
+                    <a class="navbar-brand h1" href="/">Troubleshooting
+                        Tool</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarText">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link h2" href="/">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link h2" href="/search">Search</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link h2" href="#">About</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <!-- LEFT -->
+                    <div class="col">
+                        <form class="p-5">
+                            <div class="form-group">
+                                <label for="customerSelect">Select Customer</label>
+                                <select id="customerSelect" class="form-control" name="customer">
+                                    <option value="">Select a customer</option>
+                                    <th:block th:if="${#lists.isEmpty(customers)}">
+                                        <option disabled>No customers found</option>
+                                    </th:block>
+                                    <th:block th:unless="${#lists.isEmpty(customers)}">
+                                        <option th:each="customer : ${customers}" th:value="${customer.id}"
+                                            th:text="${customer.name}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="printerSelect">Select Printer</label>
+                                <select id="printerSelect" class="form-control">
+                                    <option value="">Select a printer</option>
+                                </select>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="assetTag">Select Asset Tag</label>
+                                <select id="assetTag" class="form-control">
+                                    <option value="">Select an asset tag</option>
+                                </select>
+                            </div>
+                            <div class="form-group mt-3">
+                                <a id="accessUrl" th:href="@{'/customer.accessUrl}"><label >How to Connect</label></a>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- RIGHT -->
+                    <div class="col">
+                        <form class="p-5">
+                            <div class="form-group">
+                                <label for="printerSelect">Ticket</label>
+                                <input id="printerSelect" class="form-control" placeholder="T20240212.219">
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="printerSelect">Problems</label>
+                                <select id="printerSelect" class="form-control">
+                                    <option value="">Problems</option>
+                                    <option vlaue="">Scan to Email</option>
+                                </select>
+                                <div class="form-group mt-3">
+                                    <label for="printerSelect">Error Code</label>
+                                    <input id="printerSelect" class="form-control" placeholder="13.B9.D2 or 13.*">
+                                </div>
+                        </form>
+
+                        <!-- BUTTON -->
+                        <div class="col">
+                            <form class="">
+                                <div class="form-group mt-3">
+                                    <button type="button" class="btn btn-primary px-3 h4"
+                                        onclick="displayBottomContainer()">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- BOTTOM -->  
+            <div class="container">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Ticket</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Model</th>
+                        <th scope="col">Asset</th>
+                        <th scope="col">Error</th>
+                        <th scope="col">Problem</th>
+                        <th scope="col">Issue</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="customer : ${customers}">
+                        <td></td>
+                        <td th:text="${customer.name}"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <script src="js/index.js"></script>
+    </body>
+</html>

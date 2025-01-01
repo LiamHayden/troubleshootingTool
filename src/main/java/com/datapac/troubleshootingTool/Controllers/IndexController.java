@@ -34,6 +34,22 @@ public class IndexController {
         return "index";
     }
 
+    // SEARCH RESULTS
+    @GetMapping("/search")
+    public String searchResults(Model model) {
+        List<Customer> customers = customerService.getAllCustomers();
+        model.addAttribute("customers", customers);
+        return "search-result";
+    }
+
+    // SEARCH RESULTS - NOT USED
+    // @GetMapping("/index/search/{searchTerm}")
+    // public String searchResults(@PathVariable String searchTerm, Model model) {
+    //     List<Customer> customers = customerService.searchCustomers(searchTerm);
+    //     model.addAttribute("customers", customers);
+    //     return "index";
+    // }
+
     // GET PRINTERS BASED ON CUSTOMER ID
     @GetMapping("/index/customers/{customerId}/printers")
     public ResponseEntity<List<Printer>> getPrintersByCustomerId(@PathVariable Long customerId) {
