@@ -8,7 +8,6 @@ import com.datapac.troubleshootingTool.Customers.Customer;
 import com.datapac.troubleshootingTool.ErrorCode.ErrorCode;
 import com.datapac.troubleshootingTool.Tickets.Ticket;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -33,23 +32,27 @@ public class Printer {
     private Long id;
     private String model;
 
-    @OneToOne(mappedBy = "printer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    @JsonBackReference
+    // ONE-TO-ONE ASSET TAG
+    @OneToOne
+    @JoinColumn(name = "asset_tag_id")
+    @JsonManagedReference
     private AssetTag assetTag;
 
+    // MANY-TO-MANY CUSTOMERS
     @ManyToMany
     @JoinTable(name = "customer_printer", joinColumns = @JoinColumn(name = "printer_id"), inverseJoinColumns = @JoinColumn(name = "customer_id"))
     @JsonBackReference
     @JsonIgnoreProperties({ "printers" })
     private Set<Customer> customers = new HashSet<>();
 
+    // MANY-TO-MANY ERROR CODES
     @ManyToMany
     @JoinTable(name = "error_code_printer", joinColumns = @JoinColumn(name = "printer_id"), inverseJoinColumns = @JoinColumn(name = "error_code_id"))
     @JsonManagedReference
     @JsonIgnoreProperties({ "printers" })
     private Set<ErrorCode> errorCOdes = new HashSet<>();
 
-    // one-to-many tickets
+    // ONE-TO-MANY TICKETS
     @OneToMany(mappedBy = "printer")
     private Set<Ticket> Tickets;
 
@@ -76,10 +79,10 @@ public class Printer {
         return assetTag;
     }
 
-    public void setAssetTag(AssetTag assetTag) {
-        this.assetTag = assetTag;
-        assetTag.setPrinter(this);
-    }
+    // public void setAssetTag(AssetTag assetTag) {
+    //     this.assetTag = assetTag;
+    //     assetTag.setPrinter(this);
+    // }
 
     // customer get/set
     public Set<Customer> getCustomers() {

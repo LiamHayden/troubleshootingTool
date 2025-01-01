@@ -1,9 +1,6 @@
 package com.datapac.troubleshootingTool.AssetTag;
 
-import java.util.List;
-
 import com.datapac.troubleshootingTool.Printers.Printer;
-import com.datapac.troubleshootingTool.Tickets.Ticket;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -12,7 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.GenerationType;
 
@@ -25,21 +21,19 @@ public class AssetTag {
 
     private String tagNumber;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "printer_id")
-    @JsonManagedReference
+    // ONE-TO-ONE PRINTER
+
+    @OneToOne(mappedBy = "assetTag", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Printer printer;
 
-    @OneToMany(mappedBy = "assetTag")
-    private List<Ticket> tickets;
-
+    // CONSTRUCTORS
     public AssetTag() {
     }
 
-    public AssetTag(String tagNumber, Printer printer, List<Ticket> tickets) {
+    public AssetTag(String tagNumber, Printer printer) {
         this.tagNumber = tagNumber;
         this.printer = printer;
-        this.tickets = tickets;
     }
 
     public AssetTag(String tagNumber) {
@@ -60,13 +54,5 @@ public class AssetTag {
 
     public void setPrinter(Printer printer) {
         this.printer = printer;
-    }
-
-    public List<Ticket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
     }
 }
