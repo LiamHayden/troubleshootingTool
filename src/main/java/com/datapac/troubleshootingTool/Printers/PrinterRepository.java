@@ -11,4 +11,7 @@ public interface PrinterRepository extends JpaRepository<Printer, Long> {
 
     @Query("SELECT p FROM Printer p JOIN p.customers c WHERE c.id = :customerId")
     List<Printer> findPrintersByCustomer(@Param("customerId") Long customerId);
+
+    // @Query("SELECT p FROM Printer p JOIN p.tickets t WHERE t.id = :ticketId")
+    // Printer findPrinterByTicketId(@Param("ticketId") Long ticketId);
 }

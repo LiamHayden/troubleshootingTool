@@ -58,4 +58,17 @@ public class PrinterService {
 
         return Collections.emptyList();
     }
+
+    // public List<Printer> findPrintersByCustomerName(String customerName) {
+    //     Optional<Customer> customer = customerRepository.findCustomerByName(customerName);
+    //     if (customer.isPresent()) {
+    //         return printerRepository.findPrintersByCustomer(customer.get().getId());
+    //     }
+
+    //     return Collections.emptyList();
+    // }
+
+    // public Printer findPrinterByTicketId(Long id) {
+    //     return printerRepository.findPrinterByTicketId(id);
+    // }
 }

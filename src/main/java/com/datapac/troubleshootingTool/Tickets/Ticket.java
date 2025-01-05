@@ -1,5 +1,6 @@
 package com.datapac.troubleshootingTool.Tickets;
 
+import com.datapac.troubleshootingTool.Customers.Customer;
 import com.datapac.troubleshootingTool.Printers.Printer;
 
 import jakarta.persistence.Entity;
@@ -24,6 +25,9 @@ public class Ticket {
   private Printer printer;
 
   // one-to-many customer_id
+  @ManyToOne
+  @JoinColumn(name = "customer_id", nullable = false)
+  private Customer customer;
 
   // constructors
   public Ticket() {
@@ -49,6 +53,14 @@ public class Ticket {
 
   public void setPrinter(Printer printer) {
     this.printer = printer;
+  }
+
+  public Customer getCustomer() {
+    return this.customer;
+  }
+
+  public void setCustomer(Customer customer) {
+    this.customer = customer;
   }
 
 }

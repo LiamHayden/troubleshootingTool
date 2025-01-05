@@ -27,4 +27,5 @@ public class TicketService {
   // public Printer findPrinterByTicketId(Long id) {
   // return ticketRepository.findPrinterById(id);
   // }
+
 }

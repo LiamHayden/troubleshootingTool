@@ -22,10 +22,10 @@ INSERT INTO customer_printer (customer_id, printer_id) VALUES
 (2, 2);  -- Department of Housing with HP Color LaserJet Enterprise MFP X58045dn
 
 -- Inserting sample data into the ticket table
-INSERT INTO ticket (number, printer_id) VALUES
-('T12122024.357', 1),
-('T10042012.321', 2),
-('T21112012.101', 3);
+INSERT INTO ticket (number, printer_id, customer_id) VALUES
+('T12122024.357', 1, 1),
+('T10042012.321', 2, 1),
+('T21112012.101', 3, 2);
 
 -- Inserting sample data into the error_code table
 INSERT INTO error_code (code) VALUES
