@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.datapac.troubleshootingTool.Printers.Printer;
+import com.datapac.troubleshootingTool.Tickets.Ticket;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
@@ -13,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Customer {
@@ -27,6 +29,10 @@ public class Customer {
     @JoinTable(name = "customer_printer", joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "printer_id"))
     @JsonManagedReference
     private Set<Printer> printers = new HashSet<>();
+
+    // ONE-TO-MANY TICKETS
+    @OneToMany(mappedBy = "customer")
+    private Set<Ticket> Tickets;
 
     // constructors
 

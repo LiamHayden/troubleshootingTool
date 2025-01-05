@@ -36,11 +36,11 @@ public class ErrorCode {
     this.printers = printers;
   }
 
-  public String getErrorCode() {
+  public String getCode() {
     return this.code;
   }
 
-  public void setErrorCode(String code) {
+  public void setCode(String code) {
     this.code = code;
   }
 

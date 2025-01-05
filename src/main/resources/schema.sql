@@ -33,7 +33,9 @@ CREATE TABLE ticket (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     number VARCHAR(255) NOT NULL,
     printer_id BIGINT NOT NULL,
-    FOREIGN KEY (printer_id) REFERENCES printer(id)
+    customer_id BIGINT NOT NULL,
+    FOREIGN KEY (printer_id) REFERENCES printer(id),
+    FOREIGN KEY (customer_id) REFERENCES customer(id)
 );
 
 -- Creating Error Code table

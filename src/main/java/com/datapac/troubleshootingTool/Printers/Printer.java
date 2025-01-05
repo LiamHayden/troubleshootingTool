@@ -50,7 +50,7 @@ public class Printer {
     @JoinTable(name = "error_code_printer", joinColumns = @JoinColumn(name = "printer_id"), inverseJoinColumns = @JoinColumn(name = "error_code_id"))
     @JsonManagedReference
     @JsonIgnoreProperties({ "printers" })
-    private Set<ErrorCode> errorCOdes = new HashSet<>();
+    private Set<ErrorCode> errorCodes = new HashSet<>();
 
     // ONE-TO-MANY TICKETS
     @OneToMany(mappedBy = "printer")
@@ -95,5 +95,13 @@ public class Printer {
 
     public Long getId() {
         return this.id;
+    }
+
+    public Set<ErrorCode> getErrorCodes() {
+        return errorCodes;
+    }
+
+    public void setErrorCodes(Set<ErrorCode> errorCodes) {
+        this.errorCodes = errorCodes;
     }
 }

@@ -13,6 +13,8 @@ import com.datapac.troubleshootingTool.Customers.Customer;
 import com.datapac.troubleshootingTool.Customers.CustomerService;
 import com.datapac.troubleshootingTool.Printers.Printer;
 import com.datapac.troubleshootingTool.Printers.PrinterService;
+import com.datapac.troubleshootingTool.Tickets.Ticket;
+import com.datapac.troubleshootingTool.Tickets.TicketService;
 
 @Controller
 public class IndexController {
@@ -21,9 +23,12 @@ public class IndexController {
 
     private final PrinterService printerService;
 
-    public IndexController(CustomerService customerService, PrinterService printerService) {
+    private final TicketService ticketService;
+
+    public IndexController(CustomerService customerService, PrinterService printerService, TicketService ticketService) {
         this.customerService = customerService;
         this.printerService = printerService;
+        this.ticketService = ticketService;
     }
 
     // INDEX
@@ -37,8 +42,18 @@ public class IndexController {
     // SEARCH RESULTS
     @GetMapping("/search")
     public String searchResults(Model model) {
+        // TICKET
+        List<Ticket> tickets = ticketService.findAllTickets();
+        model.addAttribute("tickets", tickets);
+
+        // CUSTOMER
         List<Customer> customers = customerService.getAllCustomers();
         model.addAttribute("customers", customers);
+
+        //  PRINTER
+        List<Printer> printers = printerService.findAllPrinters();
+        model.addAttribute("printers", printers);
+
         return "search-result";
     }
 
@@ -71,5 +86,12 @@ public class IndexController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+
+    // GET PRINTER BASED ON TICKET
+    // @GetMapping("/index/tickets/{ticketId}/printers")
+    // public Printer getPrinterByTicketId(@PathVariable Long ticketId) {
+    //     Printer printer = printerService.findPrinterByTicketId(ticketId);
+    //     return printer;
+    // }
 
 }

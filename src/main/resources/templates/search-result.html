@@ -117,15 +117,19 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="customer : ${customers}">
-                        <td></td>
-                        <td th:text="${customer.name}"></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                        <tr th:each="ticket : ${tickets}">
+                            <td th:text="${ticket.number}"></td>
+                            <td th:text="${ticket.customer != null ? ticket.customer.name : 'No Customer'}"></td>
+                            <td th:text="${ticket.printer != null ? ticket.printer.model : 'No Printer'}"></td>
+                            <td th:text="${ticket.printer.assetTag != null ? ticket.printer.assetTag.tagNumber : 'No Asset Tag'}"></td>
+                            <td>
+                                <span th:each="errorCode : ${ticket.printer.errorCodes}">
+                                    <span th:text="${errorCode.code}"></span><br>
+                                </span>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
