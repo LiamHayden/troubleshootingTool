@@ -37,3 +37,7 @@ INSERT INTO error_code_printer (error_code_id, printer_id) VALUES
 (1, 1),  
 (1, 2),  
 (2, 2);
+
+INSERT INTO problem (description) VALUES
+('Scan to Email'),
+('HDD');
