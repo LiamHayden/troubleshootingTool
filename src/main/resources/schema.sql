@@ -53,7 +53,14 @@ CREATE TABLE error_code_printer (
     FOREIGN KEY (printer_id) REFERENCES printer(id)
 );
 
+-- Creating Problem table
 CREATE TABLE problem (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     description VARCHAR(255) NOT NULL
+);
+
+-- Creating Question Table
+CREATE TABLE question (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    questionDescription VARCHAR(255) NOT NULL
 );
