@@ -38,6 +38,12 @@ INSERT INTO error_code_printer (error_code_id, printer_id) VALUES
 (1, 2),  
 (2, 2);
 
+-- Inserting sample data into the problem table
 INSERT INTO problem (description) VALUES
 ('Scan to Email'),
-('HDD');
+('49.3c.07 Error Code');
+
+-- Inserting sample data into the question table
+INSERT INTO question (questionDescription) VALUES
+('My scans are not coming into my email address.'),
+('Printer shows a 49.3c.07 error code.');
