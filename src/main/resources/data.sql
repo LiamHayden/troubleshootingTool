@@ -47,3 +47,8 @@ INSERT INTO problem (description) VALUES
 INSERT INTO question (questionDescription) VALUES
 ('Are a solid green and flashing amber LED at the network connection?'),
 ('Can you browse or ping the printer?');
+
+-- Inserting sample data into the answer table
+INSERT INTO answer (answerDescription, answerImg) VALUES
+('Yes', 'N/A'),
+('No', 'N/A');

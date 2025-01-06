@@ -64,3 +64,10 @@ CREATE TABLE question (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     questionDescription VARCHAR(255) NOT NULL
 );
+
+-- Creating Answer table
+CREATE TABLE answer (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    answerDescription VARCHAR(255) NOT NULL,
+    answerImg VARCHAR(255) NOT NULL
+);
