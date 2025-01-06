@@ -45,5 +45,5 @@ INSERT INTO problem (description) VALUES
 
 -- Inserting sample data into the question table
 INSERT INTO question (questionDescription) VALUES
-('My scans are not coming into my email address.'),
-('Printer shows a 49.3c.07 error code.');
+('Are a solid green and flashing amber LED at the network connection?'),
+('Can you browse or ping the printer?');
