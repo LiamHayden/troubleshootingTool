@@ -13,8 +13,11 @@ import com.datapac.troubleshootingTool.Customers.Customer;
 import com.datapac.troubleshootingTool.Customers.CustomerService;
 import com.datapac.troubleshootingTool.Printers.Printer;
 import com.datapac.troubleshootingTool.Printers.PrinterService;
+import com.datapac.troubleshootingTool.Question.Question;
 import com.datapac.troubleshootingTool.Tickets.Ticket;
 import com.datapac.troubleshootingTool.Tickets.TicketService;
+
+import com.datapac.troubleshootingTool.Question.*;
 
 @Controller
 public class IndexController {
@@ -24,11 +27,14 @@ public class IndexController {
     private final PrinterService printerService;
 
     private final TicketService ticketService;
+    
+    private final QuestionRepository questionRepository;
 
-    public IndexController(CustomerService customerService, PrinterService printerService, TicketService ticketService) {
+    public IndexController(CustomerService customerService, PrinterService printerService, TicketService ticketService, QuestionRepository questionRepository) {
         this.customerService = customerService;
         this.printerService = printerService;
         this.ticketService = ticketService;
+        this.questionRepository = questionRepository;
     }
 
     // INDEX
@@ -93,5 +99,12 @@ public class IndexController {
     //     Printer printer = printerService.findPrinterByTicketId(ticketId);
     //     return printer;
     // }
+    
+    @GetMapping("/index/question/description/{id}")
+	public Model findQuestionByProblem(@PathVariable Long id, Model model) {
+		Question question = questionRepository.findById(id).get();
+		return model.addAttribute("question", question);
+//		return question.getQuestionDescription();
+	}
 
 }

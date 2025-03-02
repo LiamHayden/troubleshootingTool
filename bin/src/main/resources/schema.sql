@@ -62,14 +62,12 @@ CREATE TABLE problem (
 -- Creating Question Table
 CREATE TABLE question (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    question_description VARCHAR(255) NOT NULL
+    questionDescription VARCHAR(255) NOT NULL
 );
 
 -- Creating Answer table
 CREATE TABLE answer (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    answer_description VARCHAR(255) NOT NULL,
-    answer_img VARCHAR(255) NOT NULL,
-    question_id BIGINT NOT NULL,
-    FOREIGN KEY (question_id) REFERENCES question(id)
+    answerDescription VARCHAR(255) NOT NULL,
+    answerImg VARCHAR(255) NOT NULL
 );
