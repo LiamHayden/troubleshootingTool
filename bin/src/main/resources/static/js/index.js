@@ -1,16 +1,3 @@
-// DISPLAY TROUBLESHOOTING SECTION
-$(document).ready(function () {
-	
-	// Retreive and display question
-	$("#start-button").click(function() {
-		// Display bottom - troubleshooting section
-		$("#bottom-container").show();
-		$.get("/questions/question/description/1", function(question) {
-			$("#question-description").replaceWith("<h3>" + question + "</h3>");
-		})
-	});
-});
-
 $(document).ready(function () {
   // When a customer is selected
   $('#customerSelect').change(function () {
@@ -55,4 +42,7 @@ $(document).ready(function () {
   });
 });
 
-//document.getElementById('start-button').addEventListener('click', displayBottomContainer);
+// DISPLAY TROUBLESHOOTING SECTION
+function displayBottomContainer() {
+  document.getElementById("bottom-container").style.display = "block";
+}

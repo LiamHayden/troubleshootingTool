@@ -1,4 +1,3 @@
--- data.sql
 -- Inserting sample data into the customer table
 INSERT INTO customer (name, access_url) VALUES
 ('Office of Public Works', 'http://example.com/'),
@@ -45,11 +44,11 @@ INSERT INTO problem (description) VALUES
 ('49.3c.07 Error Code');
 
 -- Inserting sample data into the question table
-INSERT INTO question (question_description) VALUES
+INSERT INTO question (questionDescription) VALUES
 ('Are a solid green and flashing amber LED at the network connection?'),
-('Can you browse or ping the printer?'),
-('Is the network settings ok?');
+('Can you browse or ping the printer?');
 
 -- Inserting sample data into the answer table
-INSERT INTO answer (answer_description, answer_img, question_id) VALUES
-('It looks like the problem is related to network connection.', '***Support ticket image***', 1);
+INSERT INTO answer (answerDescription, answerImg) VALUES
+('Yes', 'N/A'),
+('No', 'N/A');

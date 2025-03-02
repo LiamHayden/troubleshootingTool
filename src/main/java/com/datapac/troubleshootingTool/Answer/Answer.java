@@ -2,8 +2,14 @@ package com.datapac.troubleshootingTool.Answer;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+
+import com.datapac.troubleshootingTool.Question.Question;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Answer {
@@ -12,11 +18,16 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    
     private String answerDescription;
 
     private String answerImg;
 
     // ONE-TO-ONE RELATIONSHIP TO QUESTION TO GO HERE
+    @OneToOne
+    @JoinColumn(name = "question_id")
+    @JsonManagedReference
+    private Question question;
 
     public Answer() {
     }
