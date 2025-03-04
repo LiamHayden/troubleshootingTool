@@ -13,6 +13,8 @@ import com.datapac.troubleshootingTool.Customers.Customer;
 import com.datapac.troubleshootingTool.Customers.CustomerService;
 import com.datapac.troubleshootingTool.Printers.Printer;
 import com.datapac.troubleshootingTool.Printers.PrinterService;
+import com.datapac.troubleshootingTool.Problem.Problem;
+import com.datapac.troubleshootingTool.Problem.ProblemService;
 import com.datapac.troubleshootingTool.Question.Question;
 import com.datapac.troubleshootingTool.Tickets.Ticket;
 import com.datapac.troubleshootingTool.Tickets.TicketService;
@@ -29,12 +31,15 @@ public class IndexController {
     private final TicketService ticketService;
     
     private final QuestionRepository questionRepository;
+    
+    private final ProblemService problemService;
 
-    public IndexController(CustomerService customerService, PrinterService printerService, TicketService ticketService, QuestionRepository questionRepository) {
+    public IndexController(CustomerService customerService, PrinterService printerService, TicketService ticketService, QuestionRepository questionRepository, ProblemService problemService) {
         this.customerService = customerService;
         this.printerService = printerService;
         this.ticketService = ticketService;
         this.questionRepository = questionRepository;
+        this.problemService = problemService;
     }
 
     // INDEX
@@ -42,6 +47,9 @@ public class IndexController {
     public String index(Model model) {
         List<Customer> customers = customerService.getAllCustomers();
         model.addAttribute("customers", customers);
+        
+        List<Problem> problems = problemService.getAllProblems();
+        model.addAttribute("problems", problems);
         return "index";
     }
 

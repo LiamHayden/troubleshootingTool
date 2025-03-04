@@ -11,6 +11,15 @@ $(document).ready(function () {
 	});
 });
 
+//DISPLAY PROBLEMS
+$(document).ready(function () {
+	// When a customer is selected
+	  $('#problemSelect').change(function () {
+	    var problemId = $(this).val();
+	    window.console && console.log(problemId);
+});
+
+// DISPLAY PRINTERS BASED ON CUSTOMERS
 $(document).ready(function () {
   // When a customer is selected
   $('#customerSelect').change(function () {
@@ -56,3 +65,4 @@ $(document).ready(function () {
 });
 
 //document.getElementById('start-button').addEventListener('click', displayBottomContainer);
+});
